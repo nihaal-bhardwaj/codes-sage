@@ -79,11 +79,10 @@ export default function MonthlyActivityGraph({ monthlyData = [], activeYear = ne
 
   return (
     <div
-      className={`rounded-3xl p-5 sm:p-7 border transition-all duration-300 ${
-        isDark
+      className={`rounded-3xl p-5 sm:p-7 border transition-all duration-300 ${isDark
           ? 'bg-[#080512]/90 border-white/15 shadow-[0_0_50px_rgba(147,51,234,0.06)]'
           : 'bg-white border-slate-200 shadow-xl shadow-slate-200/50'
-      }`}
+        }`}
     >
       {/* Top Bar: Title & Filter Tabs */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
@@ -94,11 +93,10 @@ export default function MonthlyActivityGraph({ monthlyData = [], activeYear = ne
               Audit Activity Velocity
             </h2>
             <span
-              className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold border ${
-                isDark
+              className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold border ${isDark
                   ? 'bg-purple-500/10 text-purple-300 border-purple-500/30'
                   : 'bg-purple-100 text-purple-800 border-purple-300'
-              }`}
+                }`}
             >
               {activeYear} Matrix
             </span>
@@ -110,52 +108,48 @@ export default function MonthlyActivityGraph({ monthlyData = [], activeYear = ne
 
         {/* Filter Switcher */}
         <div
-          className={`flex items-center p-1 rounded-2xl border text-xs font-mono select-none self-start sm:self-auto ${
-            isDark ? 'bg-black/40 border-white/10' : 'bg-slate-100 border-slate-200'
-          }`}
+          className={`flex items-center p-1 rounded-2xl border text-xs font-mono select-none self-start sm:self-auto ${isDark ? 'bg-black/40 border-white/10' : 'bg-slate-100 border-slate-200'
+            }`}
         >
           <button
             type="button"
             onClick={() => setActiveFilter('all')}
-            className={`px-3 py-1.5 rounded-xl font-medium transition-all ${
-              activeFilter === 'all'
+            className={`px-3 py-1.5 rounded-xl font-medium transition-all ${activeFilter === 'all'
                 ? isDark
                   ? 'bg-purple-600 text-white shadow-sm'
                   : 'bg-white text-purple-700 shadow-sm'
                 : isDark
-                ? 'text-white/60 hover:text-white'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
+                  ? 'text-white/60 hover:text-white'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
           >
             All Audits
           </button>
           <button
             type="button"
             onClick={() => setActiveFilter('code')}
-            className={`px-3 py-1.5 rounded-xl font-medium transition-all ${
-              activeFilter === 'code'
+            className={`px-3 py-1.5 rounded-xl font-medium transition-all ${activeFilter === 'code'
                 ? isDark
                   ? 'bg-purple-600 text-white shadow-sm'
                   : 'bg-white text-purple-700 shadow-sm'
                 : isDark
-                ? 'text-white/60 hover:text-white'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
+                  ? 'text-white/60 hover:text-white'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
           >
             Code Snippets
           </button>
           <button
             type="button"
             onClick={() => setActiveFilter('repo')}
-            className={`px-3 py-1.5 rounded-xl font-medium transition-all ${
-              activeFilter === 'repo'
+            className={`px-3 py-1.5 rounded-xl font-medium transition-all ${activeFilter === 'repo'
                 ? isDark
                   ? 'bg-cyan-600 text-white shadow-sm'
                   : 'bg-white text-cyan-700 shadow-sm'
                 : isDark
-                ? 'text-white/60 hover:text-white'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
+                  ? 'text-white/60 hover:text-white'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
           >
             Repositories
           </button>
@@ -328,8 +322,8 @@ export default function MonthlyActivityGraph({ monthlyData = [], activeYear = ne
                     (activeFilter === 'code'
                       ? codeH
                       : activeFilter === 'repo'
-                      ? repoH
-                      : totalH)
+                        ? repoH
+                        : totalH)
                   }
                   r={isHovered ? 5.5 : 3.5}
                   fill={isDark ? '#080512' : '#ffffff'}
@@ -343,15 +337,14 @@ export default function MonthlyActivityGraph({ monthlyData = [], activeYear = ne
                   x={centerX}
                   y={chartHeight + 24}
                   textAnchor="middle"
-                  className={`text-[11px] font-mono transition-colors ${
-                    isHovered
+                  className={`text-[11px] font-mono transition-colors ${isHovered
                       ? isDark
                         ? 'fill-white font-bold'
                         : 'fill-slate-900 font-bold'
                       : isDark
-                      ? 'fill-white/40'
-                      : 'fill-slate-400'
-                  }`}
+                        ? 'fill-white/40'
+                        : 'fill-slate-400'
+                    }`}
                 >
                   {d.name}
                 </text>
@@ -363,22 +356,20 @@ export default function MonthlyActivityGraph({ monthlyData = [], activeYear = ne
         {/* Floating Tooltip when hovering over a month */}
         {hoveredMonth && (
           <div
-            className={`absolute top-2 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:left-auto sm:right-6 pointer-events-none rounded-2xl p-3.5 border shadow-2xl backdrop-blur-xl animate-fade-in font-mono text-xs z-30 ${
-              isDark
+            className={`absolute top-2 left-1/2 -translate-x-1/2 sm:translate-x-0 sm:left-auto sm:right-6 pointer-events-none rounded-2xl p-3.5 border shadow-2xl backdrop-blur-xl animate-fade-in font-mono text-xs z-30 ${isDark
                 ? 'bg-black/90 border-purple-500/40 text-white shadow-purple-500/10'
                 : 'bg-white/95 border-purple-200 text-slate-900 shadow-xl'
-            }`}
+              }`}
           >
             <div className="flex items-center justify-between gap-4 border-b pb-2 mb-2 border-white/10">
               <span className="font-bold text-sm tracking-wide">
                 {hoveredMonth.name} {activeYear}
               </span>
               <span
-                className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                  hoveredMonth.avgScore >= 80
+                className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${hoveredMonth.avgScore >= 80
                     ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
                     : 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
-                }`}
+                  }`}
               >
                 Avg {hoveredMonth.avgScore > 0 ? `${hoveredMonth.avgScore}/100` : 'N/A'}
               </span>
@@ -414,9 +405,8 @@ export default function MonthlyActivityGraph({ monthlyData = [], activeYear = ne
 
       {/* Bottom KPI Legend and Metrics */}
       <div
-        className={`mt-6 pt-5 border-t flex flex-wrap items-center justify-between gap-4 text-xs font-mono ${
-          isDark ? 'border-white/10 text-white/60' : 'border-slate-200 text-slate-600'
-        }`}
+        className={`mt-6 pt-5 border-t flex flex-wrap items-center justify-between gap-4 text-xs font-mono ${isDark ? 'border-white/10 text-white/60' : 'border-slate-200 text-slate-600'
+          }`}
       >
         <div className="flex items-center gap-4 sm:gap-6 flex-wrap">
           <div className="flex items-center gap-2">
@@ -429,9 +419,7 @@ export default function MonthlyActivityGraph({ monthlyData = [], activeYear = ne
           </div>
         </div>
 
-        <div className="flex items-center gap-4 text-[11px]">
-          <span>Interactive: Hover over columns to inspect details</span>
-        </div>
+
       </div>
     </div>
   );
