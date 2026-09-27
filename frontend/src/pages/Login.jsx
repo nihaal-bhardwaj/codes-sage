@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import SpecularButton from '../components/SpecularButton';
 import GoogleButton from '../components/GoogleButton';
-import Ballpit from '../components/Ballpit';
+import Aurora from '../components/Aurora';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -92,15 +92,13 @@ export default function Login() {
 
   return (
     <div className="min-h-screen w-full bg-black flex flex-col justify-center items-center px-4 relative overflow-hidden">
-      {/* 3D Ballpit Physics Background */}
+      {/* Aurora Ambient Background */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-        <Ballpit
-          count={100}
-          gravity={0.02}
-          friction={0.9975}
-          wallBounce={0.95}
-          followCursor={false}
-          colors={['#ea580c', '#dc2626', '#1d4ed8', '#db2777', '#f8fafc', '#7c3aed', '#059669']}
+        <Aurora
+          colorStops={["#7cff67", "#B497CF", "#5227FF"]}
+          blend={0.5}
+          amplitude={1.0}
+          speed={1}
         />
       </div>
 
