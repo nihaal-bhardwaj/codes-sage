@@ -40,7 +40,7 @@ class x {
   onBeforeRender = () => {};
   onAfterRender = () => {};
   onAfterResize = () => {};
-  #s = false;
+  #s = true;
   #n = false;
   #boundResize = this.#f.bind(this);
   #boundVisibilityChange = this.#v.bind(this);
@@ -58,6 +58,8 @@ class x {
     this.#p();
     this.resize();
     this.#g();
+    this.#s = true;
+    this.#w(); // Start rendering immediately
   }
   #m() {
     this.camera = new t();
@@ -119,26 +121,32 @@ class x {
     this.#a = setTimeout(this.resize.bind(this), 100);
   }
   resize() {
-    let e, t;
+    let e = 0, t = 0;
     if (this.#e.size instanceof Object) {
       e = this.#e.size.width;
       t = this.#e.size.height;
     } else if (this.#e.size === 'parent' && this.canvas.parentNode) {
-      e = this.canvas.parentNode.offsetWidth;
-      t = this.canvas.parentNode.offsetHeight;
-    } else {
-      e = window.innerWidth;
-      t = window.innerHeight;
+      e = this.canvas.parentNode.clientWidth || this.canvas.parentNode.offsetWidth;
+      t = this.canvas.parentNode.clientHeight || this.canvas.parentNode.offsetHeight;
     }
+    
+    // Reliable fallback if parent is not measured yet
+    if (!e || !t || e <= 0 || t <= 0) {
+      e = typeof window !== 'undefined' ? window.innerWidth : 1920;
+      t = typeof window !== 'undefined' ? window.innerHeight : 1080;
+    }
+
     this.size.width = e;
     this.size.height = t;
-    this.size.ratio = e / t;
+    this.size.ratio = e / (t || 1);
     this.#x();
     this.#b();
-    this.onAfterResize(this.size);
+    if (typeof this.onAfterResize === 'function') {
+      this.onAfterResize(this.size);
+    }
   }
   #x() {
-    this.camera.aspect = this.size.width / this.size.height;
+    this.camera.aspect = this.size.width / (this.size.height || 1);
     if (this.camera.isPerspectiveCamera && this.cameraFov) {
       if (this.cameraMinAspect && this.camera.aspect < this.cameraMinAspect) {
         this.#A(this.cameraMinAspect);
@@ -554,29 +562,29 @@ class Y extends c {
 }
 
 const X = {
-  count: 200,
-  colors: [0x6366f1, 0x8b5cf6, 0xec4899],
+  count: 100,
+  colors: [0x6366f1, 0x8b5cf6, 0xec4899, 0x38bdf8],
   ambientColor: 16777215,
-  ambientIntensity: 1,
-  lightIntensity: 200,
+  ambientIntensity: 2.0,
+  lightIntensity: 400,
   materialParams: {
-    metalness: 0.5,
-    roughness: 0.5,
+    metalness: 0.3,
+    roughness: 0.2,
     clearcoat: 1,
-    clearcoatRoughness: 0.15
+    clearcoatRoughness: 0.1
   },
-  minSize: 0.5,
-  maxSize: 1,
-  size0: 1,
-  gravity: 0.5,
+  minSize: 0.6,
+  maxSize: 1.3,
+  size0: 1.3,
+  gravity: 0.02,
   friction: 0.9975,
   wallBounce: 0.95,
   maxVelocity: 0.15,
-  maxX: 5,
-  maxY: 5,
-  maxZ: 2,
+  maxX: 15,
+  maxY: 10,
+  maxZ: 3,
   controlSphere0: false,
-  followCursor: true
+  followCursor: false
 };
 
 const U = new m();
@@ -635,7 +643,9 @@ class Z extends d {
           this.light.color.copy(t.getColorAt(idx / this.count));
         }
       }
-      this.instanceColor.needsUpdate = true;
+      if (this.instanceColor) {
+        this.instanceColor.needsUpdate = true;
+      }
     }
   }
   update(e) {
@@ -666,8 +676,17 @@ function createBallpit(e, t = {}) {
   i.camera.position.set(0, 0, 20);
   i.camera.lookAt(0, 0, 0);
   i.cameraMaxAspect = 1.5;
-  i.resize();
+  
+  i.onAfterResize = ev => {
+    if (s && s.config) {
+      s.config.maxX = Math.max(ev.wWidth / 2, 8);
+      s.config.maxY = Math.max(ev.wHeight / 2, 6);
+    }
+  };
+
   initialize(t);
+  i.resize();
+
   const n = new y();
   const o = new w(new a(0, 0, 1), 0);
   const r = new a();
@@ -700,10 +719,6 @@ function createBallpit(e, t = {}) {
   }
   i.onBeforeRender = e => {
     if (!c) s.update(e);
-  };
-  i.onAfterResize = e => {
-    s.config.maxX = e.wWidth / 2;
-    s.config.maxY = e.wHeight / 2;
   };
   return {
     three: i,
@@ -766,7 +781,21 @@ const Ballpit = ({ className = '', followCursor = false, ...props }) => {
     }
   }, [props, followCursor]);
 
-  return <canvas className={className} ref={canvasRef} style={{ width: '100%', height: '100%' }} />;
+  return (
+    <canvas
+      className={className}
+      ref={canvasRef}
+      style={{
+        display: 'block',
+        width: '100%',
+        height: '100%',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        pointerEvents: followCursor ? 'auto' : 'none'
+      }}
+    />
+  );
 };
 
 export default Ballpit;
