@@ -100,7 +100,7 @@ export default function Login() {
           friction={0.9975}
           wallBounce={0.95}
           followCursor={false}
-          colors={[0x6366f1, 0x8b5cf6, 0xec4899, 0x38bdf8]}
+          colors={['#ea580c', '#dc2626', '#1d4ed8', '#db2777', '#f8fafc', '#7c3aed', '#059669']}
         />
       </div>
 

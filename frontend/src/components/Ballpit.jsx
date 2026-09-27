@@ -563,15 +563,15 @@ class Y extends c {
 
 const X = {
   count: 100,
-  colors: [0x6366f1, 0x8b5cf6, 0xec4899, 0x38bdf8],
+  colors: ['#ea580c', '#dc2626', '#1d4ed8', '#db2777', '#f8fafc', '#7c3aed', '#059669'],
   ambientColor: 16777215,
-  ambientIntensity: 2.0,
-  lightIntensity: 400,
+  ambientIntensity: 0.9,
+  lightIntensity: 220,
   materialParams: {
-    metalness: 0.3,
-    roughness: 0.2,
+    metalness: 0.5,
+    roughness: 0.35,
     clearcoat: 1,
-    clearcoatRoughness: 0.1
+    clearcoatRoughness: 0.12
   },
   minSize: 0.6,
   maxSize: 1.3,
