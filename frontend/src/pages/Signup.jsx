@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import SpecularButton from '../components/SpecularButton';
 import GoogleButton from '../components/GoogleButton';
+import Ballpit from '../components/Ballpit';
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -99,9 +100,21 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-black flex flex-col justify-center items-center px-4 relative">
+    <div className="min-h-screen w-full bg-black flex flex-col justify-center items-center px-4 relative overflow-hidden py-8">
+      {/* 3D Ballpit Physics Background */}
+      <div className="absolute inset-0 z-0">
+        <Ballpit
+          count={100}
+          gravity={0.01}
+          friction={0.9975}
+          wallBounce={0.95}
+          followCursor={false}
+          colors={[0x6366f1, 0x8b5cf6, 0xec4899]}
+        />
+      </div>
+
       {/* Centered Glass Card */}
-      <div className="relative z-10 w-full max-w-md bg-white/5 border border-white/10 backdrop-blur-md rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+      <div className="relative z-10 w-full max-w-md bg-black/60 border border-white/10 backdrop-blur-xl rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
         {/* CodeSage Logo & Header */}
         <div className="text-center space-y-2">
           <Link to="/" className="inline-flex items-center mb-2 group">
